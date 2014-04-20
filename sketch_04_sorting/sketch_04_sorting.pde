@@ -8,11 +8,11 @@ Boolean isPlaying;
 void setup() {
   size(720, 464);
   
-  myMovie = new Movie(this, "Portlandia.S03E06.HDTV.x264-2HD.mp4");
+  myMovie = new Movie(this, "Groundhog.Day.1993.BrRip.720p.x264.YIFY.mp4");
   myMovie.play();
 
   subs = new ArrayList<Sub>();
-  processSubs("portlandia", "Portlandia.S03E06.HDTV.x264-2HD.srt");
+  processSubs("portlandia", "Groundhog.Day.1993.BrRip.720p.x264.YIFY.srt");
   
   subIndex = 0;
   isPlaying = false;
@@ -37,7 +37,7 @@ void draw() {
   
   //Draw subtitle
   float mt = myMovie.time();
-  if(mt < currSub.end){
+  if(mt <= currSub.end){
     pushMatrix();
       translate(width/2, height - 20);
         text(currSub.speech, 0, 0);

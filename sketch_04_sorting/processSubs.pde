@@ -20,6 +20,7 @@ void processSubs(String _movie, String filename) {
     i++;
 
     String speech = mySubs[i].toLowerCase();
+    speech = trim(speech);
     i++;
     
     //If the next line is also text
