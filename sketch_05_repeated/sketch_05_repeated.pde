@@ -47,14 +47,12 @@ void draw() {
     isPlaying = false;
   }
 
-//  noStroke();
-//  fill(255, 50);
-//  rect(10, height - 10, width - 20, 3);
-//  float thisTime = map(myMovie.time(), 0, myMovie.duration(), 10, width - 10);
-//  fill(255);
-//  ellipse(thisTime, height - 9, 9, 9);
-
-  saveFrame("frames/####.png");
+  noStroke();
+  fill(255, 50);
+  rect(10, height - 10, width - 20, 3);
+  float thisTime = map(myMovie.time(), 0, myMovie.duration(), 10, width - 10);
+  fill(255);
+  ellipse(thisTime, height - 9, 9, 9);
 
   //Quits the app
   if (subIndex >= subs.size()) {
