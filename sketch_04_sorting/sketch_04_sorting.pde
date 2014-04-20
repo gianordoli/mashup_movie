@@ -6,13 +6,13 @@ int subIndex;
 Boolean isPlaying;
 
 void setup() {
-  size(720, 464);
+  size(720, 404);
   
-  myMovie = new Movie(this, "Groundhog.Day.1993.BrRip.720p.x264.YIFY.mp4");
+  myMovie = new Movie(this, "Portlandia.S03E06.HDTV.x264-2HD.mp4");
   myMovie.play();
 
   subs = new ArrayList<Sub>();
-  processSubs("portlandia", "Groundhog.Day.1993.BrRip.720p.x264.YIFY.srt");
+  processSubs("portlandia", "Portlandia.S03E06.HDTV.x264-2HD.srt");
   
   subIndex = 0;
   isPlaying = false;
