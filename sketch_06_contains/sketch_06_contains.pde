@@ -20,9 +20,6 @@ void setup() {
   isPlaying = false;
   currSub = subs.get(subIndex);
 
-  textAlign(CENTER);
-  textSize(16);
-
 //  sortArrayList();
 //  selectRepeated();
   
@@ -43,6 +40,8 @@ void draw() {
   image(myMovie, 0, 0, width, height);
 
   //Draw subtitle
+  textAlign(CENTER);
+  textSize(16);  
   text(currSub.speech, width/2, height - 25);
 //  text(currSub.end, width/2, height - 35);
   
@@ -53,6 +52,11 @@ void draw() {
   float thisTime = map(myMovie.time(), 0, myMovie.duration(), 10, width - 10);
   fill(255);
   ellipse(thisTime, height - 9, 9, 9);
+
+  //Draw counter
+  textAlign(LEFT);
+  textSize(16);
+  text("fucking/fuckin/fuck: " + subIndex, 10, 20);
 
   //Check subtitle ending
   if (myMovie.time() >= currSub.end) {
