@@ -5,12 +5,12 @@ ArrayList<Sub> subs;
 int subIndex;
 Boolean isPlaying;
 Sub currSub;
-Boolean newFrame;
 
 void setup() {
   size(1280, 688);
   frameRate(30);
-  myMovie = new Movie(this, "Groundhog.Day.1993.BrRip.720p.x264.YIFY.mp4"); 
+  myMovie = new Movie(this, "Groundhog.Day.1993.BrRip.720p.x264.YIFY.mp4");
+  myMovie.frameRate(30); 
   myMovie.play();
 
   subs = new ArrayList<Sub>();
@@ -19,12 +19,11 @@ void setup() {
   subIndex = 0;
   isPlaying = false;
   currSub = subs.get(subIndex);
-  newFrame = false;
 
   textAlign(CENTER);
   textSize(16);
 
-  //  sortArrayList();
+//  sortArrayList();
   selectRepeated();
 }
 
@@ -42,6 +41,7 @@ void draw() {
 
   //Draw subtitle
   text(currSub.speech, width/2, height - 25);
+//  text(currSub.end, width/2, height - 35);
   
   //Draw "player"
   noStroke();
@@ -61,13 +61,10 @@ void draw() {
   if (subIndex >= subs.size()) {
     exit();
   }
-  
-  newFrame = false;
 }
 
 // Called every start a new frame is available to read
 void movieEvent(Movie m) {
-  newFrame = true;
   m.read();
 //  println(myMovie.time());
   
