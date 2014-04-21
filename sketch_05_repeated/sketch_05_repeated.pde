@@ -4,6 +4,7 @@ ArrayList<Sub> subs;
 
 int subIndex;
 Boolean isPlaying;
+Sub currSub;
 
 void setup() {
   size(1280, 688);
@@ -27,9 +28,8 @@ void setup() {
 void draw() {
   background(0);
 
-  Sub currSub = subs.get(subIndex);
-
   if (!isPlaying) {
+    currSub = subs.get(subIndex);
     myMovie.jump(currSub.start);
     //    println(currSub.start);
     isPlaying = true;
@@ -41,8 +41,7 @@ void draw() {
   float mt = myMovie.time();
   if (mt <= currSub.end) {
     text(currSub.speech, width/2, height - 25);
-  }
-  else {
+  }else {
     subIndex ++;
     isPlaying = false;
   }
@@ -63,5 +62,6 @@ void draw() {
 // Called every start a new frame is available to read
 void movieEvent(Movie m) {
   m.read();
+//  println(myMovie.time());
 }
 
