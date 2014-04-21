@@ -5,11 +5,12 @@ ArrayList<Sub> subs;
 int subIndex;
 Boolean isPlaying;
 Sub currSub;
+Boolean newFrame;
 
 void setup() {
   size(1280, 688);
-
-  myMovie = new Movie(this, "Groundhog.Day.1993.BrRip.720p.x264.YIFY.mp4");
+  frameRate(30);
+  myMovie = new Movie(this, "Groundhog.Day.1993.BrRip.720p.x264.YIFY.mp4"); 
   myMovie.play();
 
   subs = new ArrayList<Sub>();
@@ -17,6 +18,8 @@ void setup() {
 
   subIndex = 0;
   isPlaying = false;
+  currSub = subs.get(subIndex);
+  newFrame = false;
 
   textAlign(CENTER);
   textSize(16);
@@ -38,14 +41,9 @@ void draw() {
   image(myMovie, 0, 0);
 
   //Draw subtitle
-  float mt = myMovie.time();
-  if (mt <= currSub.end) {
-    text(currSub.speech, width/2, height - 25);
-  }else {
-    subIndex ++;
-    isPlaying = false;
-  }
-
+  text(currSub.speech, width/2, height - 25);
+  
+  //Draw "player"
   noStroke();
   fill(255, 50);
   rect(10, height - 10, width - 20, 3);
@@ -53,15 +51,25 @@ void draw() {
   fill(255);
   ellipse(thisTime, height - 9, 9, 9);
 
+  //Check subtitle ending
+  if (myMovie.time() >= currSub.end) {
+    subIndex ++;
+    isPlaying = false;
+  }
+
   //Quits the app
   if (subIndex >= subs.size()) {
     exit();
   }
+  
+  newFrame = false;
 }
 
 // Called every start a new frame is available to read
 void movieEvent(Movie m) {
+  newFrame = true;
   m.read();
 //  println(myMovie.time());
+  
 }
 
