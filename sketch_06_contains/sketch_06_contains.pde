@@ -23,8 +23,11 @@ void setup() {
 //  sortArrayList();
 //  selectRepeated();
   
-  String[] myWords = {"fucking", "fuck", "fuckin"};
+//  String[] myWords = {"fucking", "fuck", "fuckin"};
+  String[] myWords = {"fuck"};
   selectWords(myWords);
+  
+  textSize(16);    
 }
 
 void draw() {
@@ -41,7 +44,6 @@ void draw() {
 
   //Draw subtitle
   textAlign(CENTER);
-  textSize(16);  
   text(currSub.speech, width/2, height - 25);
 //  text(currSub.end, width/2, height - 35);
   
@@ -55,7 +57,6 @@ void draw() {
 
   //Draw counter
   textAlign(LEFT);
-  textSize(16);
   text("fucking/fuckin/fuck: " + subIndex, 10, 20);
 
   //Check subtitle ending
