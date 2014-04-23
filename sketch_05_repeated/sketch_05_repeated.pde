@@ -8,9 +8,9 @@ Sub currSub;
 
 void setup() {
   size(1280, 688);
-  frameRate(30);
+  frameRate(60);
   myMovie = new Movie(this, "Groundhog.Day.1993.BrRip.720p.x264.YIFY.mp4");
-  myMovie.frameRate(30); 
+  myMovie.frameRate(60); 
   myMovie.play();
 
   subs = new ArrayList<Sub>();
