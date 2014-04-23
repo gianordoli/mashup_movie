@@ -30,5 +30,4 @@ ArrayList<Sub> sortArrayList(ArrayList<Sub> originalArrayList){
   }
   //Replace the original list with the sorted one
   return tempList;
-//  subs = tempList;
 }

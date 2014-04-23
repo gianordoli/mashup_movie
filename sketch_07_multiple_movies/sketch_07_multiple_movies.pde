@@ -6,6 +6,8 @@ int subIndex;
 Boolean isPlaying;
 Sub currSub;
 
+String[] myWords;
+
 void setup() {
   size(960, 400);
   frameRate(30);
@@ -20,12 +22,14 @@ void setup() {
   isPlaying = false;
   currSub = subs.get(subIndex);
 
-  subs = sortArrayList(subs);
-//  selectRepeated();
+//  subs = sortArrayList(subs);
+//  subs = selectRepeated(subs);
   
 //  String[] myWords = {"fucking", "fuck", "fuckin"};
-//  String[] myWords = {"fuck"};
-//  selectWords(myWords);
+  myWords = new String[2];
+  myWords[0] = "hello";
+  myWords[1] = "yeah";
+  subs = selectWords(subs, myWords);
   
   textSize(16);   
 }
@@ -57,7 +61,11 @@ void draw() {
 
   //Draw counter
   textAlign(LEFT);
-  text("fucking/fuckin/fuck: " + subIndex, 10, 20);
+  String msg = "| ";
+  for(String s : myWords){
+    msg += s + " | ";
+  }
+  text(msg + ": " + subIndex, 10, 20);
 
   //Check subtitle ending
   if (myMovie.time() >= currSub.end) {
