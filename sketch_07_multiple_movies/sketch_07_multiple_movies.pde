@@ -9,24 +9,23 @@ Sub currSub;
 void setup() {
   size(960, 400);
   frameRate(30);
-  myMovie = new Movie(this, "The.Wolf.of.Wall.Street.2013.1080p.BluRay.x264.YIFY.mp4");
-//  myMovie = new Movie(this, "The Wolf of Wall Street 2013 DVDScr XVID AC3 Bida.avi");
+  myMovie = new Movie(this, "Portlandia.S03E06.HDTV.x264-2HD.mp4");
   myMovie.frameRate(30); 
   myMovie.play();
 
   subs = new ArrayList<Sub>();
-  processSubs("the_wolf_of_wall_street", "The.Wolf.of.Wall.Street.2013.1080p.BluRay.x264.YIFY.srt");
+  processSubs("portlandia_s03_e06", "Portlandia.S03E06.HDTV.x264-2HD.srt");
 
   subIndex = 0;
   isPlaying = false;
   currSub = subs.get(subIndex);
 
-//  sortArrayList();
+  subs = sortArrayList(subs);
 //  selectRepeated();
   
 //  String[] myWords = {"fucking", "fuck", "fuckin"};
-  String[] myWords = {"fuck"};
-  selectWords(myWords);
+//  String[] myWords = {"fuck"};
+//  selectWords(myWords);
   
   textSize(16);   
 }
