@@ -8,8 +8,8 @@ Movie currMovie;           //Movie currently playing
 int subIndex;
 Boolean isPlaying;
 Sub currSub;
-String[] myWords;
-
+StringList myWords;
+ 
 void setup() {
   size(1440, 808);
   frameRate(30);
@@ -32,12 +32,17 @@ void setup() {
   currSub = subs.get(subIndex);
 
 //  subs = sortArrayList(subs);
-  subs = selectRepeated(subs);
+//  subs = selectRepeated(subs);
   
-//  myWords = new String[2];
-//  myWords[0] = "hello";
-//  myWords[1] = "yeah";
-//  subs = selectWords(subs, myWords); 
+  myWords = new StringList();
+  println(myWords.size());
+  myWords.append("hello");
+  myWords.append("yeah");
+  subs = selectWords(subs, myWords);
+ 
+ for(Sub s : subs){
+   println(s.movie);
+ } 
 }
 
 void draw() {
@@ -73,6 +78,16 @@ void draw() {
   textAlign(CENTER);
   textSize(16);  
   text(currSub.speech, width/2, height - 25);
+  
+  //Draw counter
+  if(myWords.size() > 0){
+    textAlign(LEFT);
+    String msg = "| ";
+    for(String s : myWords){
+      msg += s + " | ";
+    }
+    text(msg + ": " + subIndex, 10, 20);  
+  }
 
 
   /*----- SUBTITLE ENDING ----*/
