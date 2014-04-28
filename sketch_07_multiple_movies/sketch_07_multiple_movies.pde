@@ -20,8 +20,8 @@ void setup() {
   setupMovies(myMovies);
 
   subs = new ArrayList<Sub>();
-  processSubs("portlandia_s03_e06", "Portlandia.S03E06.HDTV.x264-2HD.srt");
-  processSubs("portlandia_s03_e07", "Portlandia.S03E07.HDTV.x264-2HD.srt");
+  processSubs(myMovies.get(0), "Portlandia.S03E06.HDTV.x264-2HD.srt");
+  processSubs(myMovies.get(1), "Portlandia.S03E07.HDTV.x264-2HD.srt");
 
   subIndex = 0;
   isPlaying = false;
@@ -46,15 +46,20 @@ void draw() {
   background(0);
   
   if (!isPlaying) {
+    //Pause all movies
+    for(Movie m : myMovies){
+      m.pause();
+    }
+    
     currSub = subs.get(subIndex);
     println(currSub.movie);
-    if(currSub.movie.equals("portlandia_s03_e06")){
-      currMovie = myMovies.get(0);
-      myMovies.get(1).pause();
-    }else{
-      currMovie = myMovies.get(1);
-      myMovies.get(0).pause();
-    }
+//    if(currSub.movie.equals("portlandia_s03_e06")){
+//      currMovie = myMovies.get(0);
+//    }else{
+//      currMovie = myMovies.get(1);
+//    }
+
+    currMovie = currSub.movie;
     
     currMovie.play();
     currMovie.jump(currSub.start);

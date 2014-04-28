@@ -1,4 +1,4 @@
-void processSubs(String _movie, String filename) {
+void processSubs(Movie _movie, String filename) {
 
   int i = 0;
   String[] mySubs = loadStrings(filename);
