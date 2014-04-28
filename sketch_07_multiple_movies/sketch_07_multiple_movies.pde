@@ -1,5 +1,6 @@
 import processing.video.*;
-Movie myMovie;
+Movie myMovie1;
+Movie myMovie2;
 ArrayList<Sub> subs;
 
 int subIndex;
@@ -9,66 +10,75 @@ Sub currSub;
 String[] myWords;
 
 void setup() {
-  size(960, 400);
+  size(1440, 808);
   frameRate(30);
-  myMovie = new Movie(this, "Portlandia.S03E06.HDTV.x264-2HD.mp4");
-  myMovie.frameRate(30); 
-  myMovie.play();
+  myMovie1 = new Movie(this, "Portlandia.S03E06.HDTV.x264-2HD.mp4");
+  myMovie1.frameRate(30); 
+  // Pausing the video at the first frame. 
+  myMovie1.play();
+  myMovie1.jump(0);
+  myMovie1.pause();
+
+  myMovie2 = new Movie(this, "Portlandia.S03E07.HDTV.x264-2HD.mp4");
+  myMovie2.frameRate(30);
+  // Pausing the video at the first frame. 
+  myMovie2.play();
+  myMovie2.jump(0);
+  myMovie2.pause();
 
   subs = new ArrayList<Sub>();
   processSubs("portlandia_s03_e06", "Portlandia.S03E06.HDTV.x264-2HD.srt");
+  processSubs("portlandia_s03_e07", "Portlandia.S03E07.HDTV.x264-2HD.srt");
 
   subIndex = 0;
   isPlaying = false;
   currSub = subs.get(subIndex);
 
-//  subs = sortArrayList(subs);
+  subs = sortArrayList(subs);
 //  subs = selectRepeated(subs);
   
-//  String[] myWords = {"fucking", "fuck", "fuckin"};
-  myWords = new String[2];
-  myWords[0] = "hello";
-  myWords[1] = "yeah";
-  subs = selectWords(subs, myWords);
+//  myWords = new String[2];
+//  myWords[0] = "hello";
+//  myWords[1] = "yeah";
+//  subs = selectWords(subs, myWords);
+  
+//  for(Sub s : subs){
+//    println(s.movie);
+//  }  
   
   textSize(16);   
 }
-
+Movie currMovie;
 void draw() {
   background(0);
   
   if (!isPlaying) {
     currSub = subs.get(subIndex);
-    myMovie.jump(currSub.start);
+    println(currSub.movie);
+    if(currSub.movie.equals("portlandia_s03_e06")){
+      currMovie = myMovie1;
+      myMovie2.pause();
+    }else{
+      currMovie = myMovie2;
+      myMovie1.pause();
+    }
+    
+    currMovie.play();
+    currMovie.jump(currSub.start);
     //    println(currSub.start);
     isPlaying = true;
   }
 
-  image(myMovie, 0, 0, width, height);
+  image(myMovie1, 0, 0);
+  image(myMovie2, 720, 0);
+  image(currMovie, 0, 404);
 
   //Draw subtitle
   textAlign(CENTER);
   text(currSub.speech, width/2, height - 25);
-//  text(currSub.end, width/2, height - 35);
-  
-  //Draw "player"
-  noStroke();
-  fill(255, 50);
-  rect(10, height - 10, width - 20, 3);
-  float thisTime = map(myMovie.time(), 0, myMovie.duration(), 10, width - 10);
-  fill(255);
-  ellipse(thisTime, height - 9, 9, 9);
-
-  //Draw counter
-  textAlign(LEFT);
-  String msg = "| ";
-  for(String s : myWords){
-    msg += s + " | ";
-  }
-  text(msg + ": " + subIndex, 10, 20);
 
   //Check subtitle ending
-  if (myMovie.time() >= currSub.end) {
+  if (currMovie.time() >= currSub.end) {
     subIndex ++;
     isPlaying = false;
   }
