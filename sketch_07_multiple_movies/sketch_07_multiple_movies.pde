@@ -27,8 +27,8 @@ void setup() {
   isPlaying = false;
   currSub = subs.get(subIndex);
 
-  subs = sortArrayList(subs);
-//  subs = selectRepeated(subs);
+//  subs = sortArrayList(subs);
+  subs = selectRepeated(subs);
   
 //  myWords = new String[2];
 //  myWords[0] = "hello";
@@ -63,7 +63,6 @@ void draw() {
     
     currMovie.play();
     currMovie.jump(currSub.start);
-    //    println(currSub.start);
     isPlaying = true;
   }
 
@@ -83,6 +82,10 @@ void draw() {
 
   //Quits the app
   if (subIndex >= subs.size()) {
+    //Drop all movies
+    for(Movie m : myMovies){
+      m.stop();
+    }
     exit();
   }
 }
