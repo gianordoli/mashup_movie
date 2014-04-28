@@ -1,25 +1,29 @@
 import processing.video.*;
-Movie myMovie1;
-Movie myMovie2;
-ArrayList<Movie> myMovies;
-ArrayList<Sub> subs;
 
+ArrayList<Movie> myMovies; //All movies
+ArrayList<Sub> subs;       //All subtitles
+Movie currMovie;           //Movie currently playing
+
+//Playback variables
 int subIndex;
 Boolean isPlaying;
 Sub currSub;
-
 String[] myWords;
 
 void setup() {
   size(1440, 808);
   frameRate(30);
   myMovies = new ArrayList<Movie>();
+  subs = new ArrayList<Sub>();
+  
+  //Adding movies
   myMovies.add(new Movie(this, "Portlandia.S03E06.HDTV.x264-2HD.mp4"));
   myMovies.add(new Movie(this, "Portlandia.S03E07.HDTV.x264-2HD.mp4"));
   
+  //Setting movies up
   setupMovies(myMovies);
 
-  subs = new ArrayList<Sub>();
+  //Adding subs
   processSubs(myMovies.get(0), "Portlandia.S03E06.HDTV.x264-2HD.srt");
   processSubs(myMovies.get(1), "Portlandia.S03E07.HDTV.x264-2HD.srt");
 
@@ -33,53 +37,52 @@ void setup() {
 //  myWords = new String[2];
 //  myWords[0] = "hello";
 //  myWords[1] = "yeah";
-//  subs = selectWords(subs, myWords);
-  
-//  for(Sub s : subs){
-//    println(s.movie);
-//  }  
-  
-  textSize(16);   
+//  subs = selectWords(subs, myWords); 
 }
-Movie currMovie;
+
 void draw() {
   background(0);
   
+  /*----- SUBTITLE START -----*/
   if (!isPlaying) {
     //Pause all movies
     for(Movie m : myMovies){
       m.pause();
     }
     
+    //What's the current subtitle?
     currSub = subs.get(subIndex);
-    println(currSub.movie);
-//    if(currSub.movie.equals("portlandia_s03_e06")){
-//      currMovie = myMovies.get(0);
-//    }else{
-//      currMovie = myMovies.get(1);
-//    }
+//    println(currSub.movie);
 
+    //Based on that, what' the current movie?
     currMovie = currSub.movie;
     
+    //Play and jump to position
     currMovie.play();
     currMovie.jump(currSub.start);
     isPlaying = true;
   }
 
+
+  /*---------- DRAW ----------*/
   image(myMovies.get(0), 0, 0);
   image(myMovies.get(1), 720, 0);
   image(currMovie, 0, 404);
 
   //Draw subtitle
   textAlign(CENTER);
+  textSize(16);  
   text(currSub.speech, width/2, height - 25);
 
-  //Check subtitle ending
+
+  /*----- SUBTITLE ENDING ----*/
   if (currMovie.time() >= currSub.end) {
     subIndex ++;
     isPlaying = false;
   }
 
+
+  /*--------- FINISH ---------*/
   //Quits the app
   if (subIndex >= subs.size()) {
     //Drop all movies
