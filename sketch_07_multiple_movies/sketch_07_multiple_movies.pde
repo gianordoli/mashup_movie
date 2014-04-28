@@ -1,6 +1,7 @@
 import processing.video.*;
 Movie myMovie1;
 Movie myMovie2;
+ArrayList<Movie> myMovies;
 ArrayList<Sub> subs;
 
 int subIndex;
@@ -12,19 +13,11 @@ String[] myWords;
 void setup() {
   size(1440, 808);
   frameRate(30);
-  myMovie1 = new Movie(this, "Portlandia.S03E06.HDTV.x264-2HD.mp4");
-  myMovie1.frameRate(30); 
-  // Pausing the video at the first frame. 
-  myMovie1.play();
-  myMovie1.jump(0);
-  myMovie1.pause();
-
-  myMovie2 = new Movie(this, "Portlandia.S03E07.HDTV.x264-2HD.mp4");
-  myMovie2.frameRate(30);
-  // Pausing the video at the first frame. 
-  myMovie2.play();
-  myMovie2.jump(0);
-  myMovie2.pause();
+  myMovies = new ArrayList<Movie>();
+  myMovies.add(new Movie(this, "Portlandia.S03E06.HDTV.x264-2HD.mp4"));
+  myMovies.add(new Movie(this, "Portlandia.S03E07.HDTV.x264-2HD.mp4"));
+  
+  setupMovies(myMovies);
 
   subs = new ArrayList<Sub>();
   processSubs("portlandia_s03_e06", "Portlandia.S03E06.HDTV.x264-2HD.srt");
@@ -56,11 +49,11 @@ void draw() {
     currSub = subs.get(subIndex);
     println(currSub.movie);
     if(currSub.movie.equals("portlandia_s03_e06")){
-      currMovie = myMovie1;
-      myMovie2.pause();
+      currMovie = myMovies.get(0);
+      myMovies.get(1).pause();
     }else{
-      currMovie = myMovie2;
-      myMovie1.pause();
+      currMovie = myMovies.get(1);
+      myMovies.get(0).pause();
     }
     
     currMovie.play();
@@ -69,8 +62,8 @@ void draw() {
     isPlaying = true;
   }
 
-  image(myMovie1, 0, 0);
-  image(myMovie2, 720, 0);
+  image(myMovies.get(0), 0, 0);
+  image(myMovies.get(1), 720, 0);
   image(currMovie, 0, 404);
 
   //Draw subtitle
@@ -93,5 +86,15 @@ void draw() {
 void movieEvent(Movie m) {
   m.read();
 //  println(myMovie.time());
-  
+}
+
+void setupMovies(ArrayList<Movie> allMovies){
+  for(Movie m : allMovies){
+    //Setting the framerate
+    m.frameRate(30); 
+    // Pausing the video at the first frame. 
+    m.play();
+    m.jump(0);
+    m.pause();
+  }
 }
