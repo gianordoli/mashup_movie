@@ -32,13 +32,13 @@ void setup() {
   currSub = subs.get(subIndex);
 
 //  subs = sortArrayList(subs);
-//  subs = selectRepeated(subs);
+  subs = selectRepeated(subs);
   
   myWords = new StringList();
-  println(myWords.size());
-  myWords.append("hello");
-  myWords.append("yeah");
-  subs = selectWords(subs, myWords);
+//  println(myWords.size());
+//  myWords.append("hello");
+//  myWords.append("yeah");
+//  subs = selectWords(subs, myWords);
  
  for(Sub s : subs){
    println(s.movie);
