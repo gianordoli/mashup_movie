@@ -9,7 +9,6 @@ String path;
 void setup() {
 //  size(displayWidth, displayHeight);
   size(1033, 640);
-  myMovies = new ArrayList<Movie>();  
   
   setGUI();
 }

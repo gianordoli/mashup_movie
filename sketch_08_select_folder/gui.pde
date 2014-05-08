@@ -1,8 +1,8 @@
 //GUI
 import controlP5.*;
 ControlP5 cp5;
-CheckBox checkbox;
 Accordion accordion;
+CheckBox checkbox;
 
 int top = 30;
 int left = 20;
@@ -30,48 +30,7 @@ void setGUI(){
      ;
      
   cX = cPadding;
-  cY = cPadding;
-
-//  Group g2 = cp5.addGroup("edit")
-//                .setPosition(cX, cY)
-//                .setWidth(cWidth + 2 * cPadding)
-//                .setBackgroundHeight(cHeight + 2 * cPadding)
-//                .setBackgroundColor(color(0,50))            
-//                ;                
-//  
-//  cp5.addButton("sortAZ")
-//     .setPosition(cX, cY)
-//     .setSize(cWidth, cHeight)
-//     .setCaptionLabel("Sort")
-//     .setGroup(g2)
-//     ;       
-//  cY += cHeight + cPadding;   
-//  
-//  cp5.addButton("findRepeated")
-//     .setPosition(cX, cY)
-//     .setSize(cWidth, cHeight)
-//     .setCaptionLabel("Find repeated")
-//     .setGroup(g2)
-//     ;
-//   cY += cHeight + cPadding;
-//   
-//  cp5.addTextfield("Search for words")
-//     .setPosition(cX, cY)
-////     .setAutoClear(false)
-//     .setSize(cWidth - 50, cHeight)
-//     .setGroup(g2)
-//     .setColorCaptionLabel(0);
-//     ;
-//  cX += cWidth - 50 + cPadding;
-//   
-//  cp5.addBang("searchForWords")
-//     .setPosition(cX, cY)
-//     .setSize(50 - cPadding, cHeight)
-//     .setCaptionLabel("Ok")
-//     .setGroup(g2)
-//     .getCaptionLabel()
-//     .align(ControlP5.CENTER, ControlP5.CENTER)
-//     ;               
+  cY = cPadding;             
 
   accordion = cp5.addAccordion("acc")
                  .setMoveable(true)
@@ -100,7 +59,6 @@ void setGUI(){
 }
 
 void select() {
-//  accordion.addItem(checkbox);("called select");
   selectFolder("Select a folder to process:", "folderSelected");
 }
 
@@ -137,10 +95,10 @@ void listMovieFiles(){
   }
   path += "/";
 //  println(movieFiles);
-  createMovieList(movieFiles);
+  createMoviesList(movieFiles);
 } 
 
-void createMovieList(StringList myList){
+void createMoviesList(StringList myList){
   
   Group g1 = cp5.addGroup("check")
                 .setWidth(cWidth + 2 * cPadding)
@@ -173,11 +131,14 @@ void createMovieList(StringList myList){
      ;  
   
   accordion.addItem(g1)
-           .open(1);
+           .open(1)
+           ;
 }
 
 void addMovies() {
-
+  
+    myMovies = new ArrayList<Movie>();
+    
 //    println(checkbox.getItems());
     for (int i = 0 ; i < checkbox.getItems().size(); i++) {
       String thisMovie = checkbox.getItem(i).getLabel();
@@ -186,5 +147,54 @@ void addMovies() {
         myMovies.add(new Movie(this, path + thisMovie));
       } 
     }
-    println(myMovies);
+//    println(myMovies);
+  addEditingFunctions();
+}
+
+void addEditingFunctions(){
+  cX = cPadding;
+  cY = cPadding;
+  Group g2 = cp5.addGroup("edit")
+                .setPosition(cX, cY)
+                .setWidth(cWidth + 2 * cPadding)
+                .setBackgroundHeight(cHeight + 2 * cPadding)
+                .setBackgroundColor(color(0,50))            
+                ;                
+  
+  cp5.addButton("sortAZ")
+     .setPosition(cX, cY)
+     .setSize(cWidth, cHeight)
+     .setCaptionLabel("Sort")
+     .setGroup(g2)
+     ;       
+  cY += cHeight + cPadding;   
+  
+  cp5.addButton("findRepeated")
+     .setPosition(cX, cY)
+     .setSize(cWidth, cHeight)
+     .setCaptionLabel("Find repeated")
+     .setGroup(g2)
+     ;
+   cY += cHeight + cPadding;
+   
+  cp5.addTextfield("Search for words")
+     .setPosition(cX, cY)
+//     .setAutoClear(false)
+     .setSize(cWidth - 50, cHeight)
+     .setGroup(g2)
+     .setColorCaptionLabel(0);
+     ;
+  cX += cWidth - 50 + cPadding;
+   
+  cp5.addBang("searchForWords")
+     .setPosition(cX, cY)
+     .setSize(50 - cPadding, cHeight)
+     .setCaptionLabel("Ok")
+     .setGroup(g2)
+     .getCaptionLabel()
+     .align(ControlP5.CENTER, ControlP5.CENTER)
+     ;
+     
+     accordion.addItem(g2)
+              .open(2);
 }
