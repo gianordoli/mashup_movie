@@ -4,22 +4,23 @@ ControlP5 cp5;
 Accordion accordion;
 CheckBox checkbox;
 
-int top = 30;
-int left = 20;
 int cWidth = 300;
 int cHeight = 19;
 int cPadding = 4;
 int cX = cPadding;
 int cY = cPadding;
+color myColor;
 
 void setGUI(){
   cp5 = new ControlP5(this);
+  
+  myColor = color(2, 52, 77, 180);
 
   Group g0 = cp5.addGroup("add")
-                .setPosition(left, top)
+                .setPosition(0, 0)
                 .setWidth(cWidth + 2 * cPadding)
                 .setBackgroundHeight(cHeight + 2 * cPadding)
-                .setBackgroundColor(color(0,50))            
+                .setBackgroundColor(myColor)            
                 ;
 
   cp5.addButton("select")
@@ -36,12 +37,13 @@ void setGUI(){
 
   accordion = cp5.addAccordion("acc")
                  .setMoveable(true)
-                 .setPosition(40,40)
+                 .setPosition(margin.x, margin.y)
                  .setWidth(cWidth + 2* cPadding)
                  .addItem(g0)
                  .setItemHeight(cHeight + 2 * cPadding)
 //                 .addItem(g2)
                  ;
+                 println(accordion.getColor());
                            
   accordion.open(0)
            .setCollapseMode(Accordion.MULTI);  
@@ -103,7 +105,7 @@ void createMoviesList(StringList myList){
   Group g1 = cp5.addGroup("check")
                 .setWidth(cWidth + 2 * cPadding)
                 .setBackgroundHeight((myList.size() + 1) * (cHeight + cPadding) + 2 * cPadding)
-                .setBackgroundColor(color(0,50))            
+                .setBackgroundColor(myColor)            
                 ;
                 
   cX = cPadding;
@@ -113,7 +115,7 @@ void createMoviesList(StringList myList){
                 .setGroup(g1)
 //                .setColorForeground(color(120))
 //                .setColorActive(color(255))
-                .setColorLabel(color(0))
+                .setColorLabel(color(255))
                 .setSize(cHeight, cHeight)
                 .setItemsPerRow(1)
                 .setSpacingRow(cPadding)
@@ -166,8 +168,9 @@ void addMovies() {
   
   //Playback settings
   subIndex = 0;
-  isPlaying = false;
+  isTalking = false;
   currSub = subs.get(subIndex);
+  currMovie = myMovies.get(subIndex);
   
   addEditingFunctions();
 }
@@ -176,10 +179,10 @@ void addEditingFunctions(){
   cX = cPadding;
   cY = cPadding;
   Group g2 = cp5.addGroup("edit")
-                .setPosition(cX, cY)
+//                .setPosition(cX, cY)
                 .setWidth(cWidth + 2 * cPadding)
                 .setBackgroundHeight(cHeight + 2 * cPadding)
-                .setBackgroundColor(color(0,50))            
+                .setBackgroundColor(myColor)            
                 ;                
   
   cp5.addButton("sortAZ")
@@ -203,7 +206,7 @@ void addEditingFunctions(){
 //     .setAutoClear(false)
      .setSize(cWidth - 50, cHeight)
      .setGroup(g2)
-     .setColorCaptionLabel(0);
+     .setColorCaptionLabel(color(255));
      ;
   cX += cWidth - 50 + cPadding;
    
@@ -218,4 +221,18 @@ void addEditingFunctions(){
      
      accordion.addItem(g2)
               .open(2);
+}
+
+void sortAZ(){
+  subs = sortArrayList(subs);
+  isPlaying = true;
+}
+
+void findRepeated(){
+  subs = selectRepeated(subs);
+  isPlaying = true;
+}
+
+void searchForWords(){
+
 }
