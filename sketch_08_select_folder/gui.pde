@@ -27,6 +27,8 @@ void setGUI(){
      .setSize(cWidth, cHeight)
      .setCaptionLabel("Select files")
      .setGroup(g0)
+     .getLabel()
+//     .align(ControlP5.CENTER, ControlP5.CENTER)     
      ;
      
   cX = cPadding;
@@ -47,12 +49,10 @@ void setGUI(){
   //Toggle visibility 
   cp5.mapKeyFor(new ControlKey() {
     public void keyEvent() {
-      if(cp5.group("edit").isVisible()){
-        cp5.group("edit").setVisible(false);
-        cp5.group("add").setVisible(false);  
+      if(accordion.isVisible()){
+        accordion.setVisible(false);  
       }else{
-        cp5.group("edit").setVisible(true);
-        cp5.group("add").setVisible(true);
+        accordion.setVisible(true);
       }
     }
   }, '0');
@@ -137,17 +137,38 @@ void createMoviesList(StringList myList){
 
 void addMovies() {
   
-    myMovies = new ArrayList<Movie>();
-    
+  myMovies = new ArrayList<Movie>();
+  subs = new ArrayList<Sub>();
+  
 //    println(checkbox.getItems());
-    for (int i = 0 ; i < checkbox.getItems().size(); i++) {
-      String thisMovie = checkbox.getItem(i).getLabel();
-      if(checkbox.getItem(i).getValue() > 0){
-//        println(newMovie);
-        myMovies.add(new Movie(this, path + thisMovie));
-      } 
-    }
-//    println(myMovies);
+  for (int i = 0 ; i < checkbox.getItems().size(); i++) {
+    String filename = checkbox.getItem(i).getLabel();
+    if(checkbox.getItem(i).getValue() > 0){
+      //Movies
+      Movie m = new Movie(this, path + filename); 
+      myMovies.add(m);  //Add
+      m.frameRate(30);  //Set the framerate 
+      m.play();         //Pause at the first frame. 
+      m.jump(0);
+      m.pause();
+      
+      //Subtitles
+      String tempFilename = filename;
+      while(tempFilename.indexOf(".") != -1){
+        tempFilename = tempFilename.substring(tempFilename.indexOf(".") + 1);
+      }
+      int index = filename.length() - tempFilename.length() - 1;
+      String subtitle = filename.substring(0, index) + ".srt";
+      //Add
+      processSubs(m, path + subtitle);
+    } 
+  }
+  
+  //Playback settings
+  subIndex = 0;
+  isPlaying = false;
+  currSub = subs.get(subIndex);
+  
   addEditingFunctions();
 }
 

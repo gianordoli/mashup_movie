@@ -73,7 +73,7 @@ void processSubs(String _movie, String filename) {
     
     //If the next line is a paragraph
     //"while", because there may be more than one paragraph     
-    while(mySubs[i].length() == 0){
+    while(i < mySubs.length && mySubs[i].length() == 0){
       i++;
     }    
 
