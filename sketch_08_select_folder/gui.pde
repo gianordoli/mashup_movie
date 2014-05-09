@@ -149,7 +149,7 @@ void addMovies() {
       myMovies.add(m);  //Add
       m.frameRate(30);  //Set the framerate 
       m.play();         //Pause at the first frame. 
-      m.jump(0);
+      m.jump(m.duration()/4);
       m.pause();
       
       //Subtitles

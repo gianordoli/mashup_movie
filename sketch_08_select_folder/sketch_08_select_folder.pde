@@ -23,10 +23,13 @@ void setup() {
 
 void draw(){
   background(255);
+  PVector mSize = new PVector(120, 65);
   if(myMovies != null){
     for(int i = 0; i < myMovies.size(); i++){
       Movie m = myMovies.get(i);
-      image(m, 0, 0, m.width, m.height);
+      
+//      image(m, 0, 0, m.width, m.height);
+      image(m, i * mSize.x, 0, mSize.x, mSize.y);
     }
   }
 
@@ -39,7 +42,6 @@ void draw(){
     }
     exit();
   }
-
 }
 
 void movieEvent(Movie m) {
