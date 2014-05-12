@@ -17,14 +17,28 @@ StringList myWords;
 
 //Layout
 PVector margin;
+PVector thumbSize;
+PVector movieSize;
+PVector moviePos;
+
+PFont raleway;
+String msg;
 
 void setup() {
 //  size(displayWidth, displayHeight);
   size(1033, 640);
+  frameRate(30);
 //  colorMode(HSB);
+
   margin = new PVector(30, 20);
+  thumbSize = new PVector(120, 65);
+  moviePos = new PVector(2 * margin.x + cWidth, margin.y);
+  raleway = loadFont("Raleway-Bold-21.vlw");
+  
   isPlaying = false;
   setGUI();
+  
+  msg = "";
 }
 
 void draw(){
@@ -51,19 +65,30 @@ void draw(){
     }
     
     /*---------- DRAW ----------*/  
-    if(myMovies != null){
-      //Thumbs
-      PVector mSize = new PVector(120, 65);   
-      for(int i = 0; i < myMovies.size(); i++){
-        Movie m = myMovies.get(i);
-        image(m, margin.x + i * mSize.x, height - mSize.y - margin.y, mSize.x, mSize.y);
-      }
-      
-      //Main movie
+    if(myMovies != null){      
+      //Main movie 
       PVector mRatio = new PVector(currMovie.width, currMovie.height);
       mRatio.normalize();
-      float availableWidth = width - cWidth; 
-      image(currMovie, 2 * margin.x + cWidth, margin.y, mRatio.x * availableWidth, mRatio.y * availableWidth);
+      float availableWidth = width - cWidth;
+      movieSize = new PVector(mRatio.x * availableWidth, mRatio.y * availableWidth);      
+      image(currMovie, moviePos.x, moviePos.y, movieSize.x, movieSize.y);
+      
+      //Subtitle
+      textAlign(CENTER, BOTTOM);
+      textFont(raleway);
+      text(currSub.speech, moviePos.x, moviePos.y - margin.y, movieSize.x, movieSize.y);
+
+      //Thumbs
+      PVector thumbPos = new PVector(2*margin.x + cWidth, moviePos.y + movieSize.y + margin.y);
+      for(int i = 0; i < myMovies.size(); i++){
+        Movie m = myMovies.get(i); 
+        image(m, thumbPos.x, thumbPos.y, thumbSize.x, thumbSize.y);
+        thumbPos.x += thumbSize.x;
+        if(thumbPos.x > width){
+          thumbPos.x = margin.x;
+          thumbPos.y += margin.y;
+        }
+      }  
     }
    
     /*----- SUBTITLE ENDING ----*/
@@ -74,13 +99,17 @@ void draw(){
   
     /*--------- FINISH ---------*/
     //Quits the app
-    if (subs != null && subIndex >= subs.size()) {
+    if (subs != null && subIndex >= subs.size() && isPlaying) {
       //Drop all movies
       for(Movie m : myMovies){
         m.stop();
       }
       exit();
     }  
+
+    textAlign(CENTER, CENTER);
+    textFont(raleway);
+    text(msg, 2*margin.x + cWidth, margin.y, width - 2*margin.x - cWidth, 200); 
 
 }
 

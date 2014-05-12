@@ -25,7 +25,7 @@ void setGUI(){
 
   cp5.addButton("select")
      .setPosition(cX, cY)
-     .setSize(cWidth, cHeight)
+     .setSize(cWidth/3, cHeight)
      .setCaptionLabel("Select files")
      .setGroup(g0)
      .getLabel()
@@ -104,7 +104,7 @@ void createMoviesList(StringList myList){
   
   Group g1 = cp5.addGroup("check")
                 .setWidth(cWidth + 2 * cPadding)
-                .setBackgroundHeight((myList.size() + 1) * (cHeight + cPadding) + 2 * cPadding)
+                .setBackgroundHeight((myList.size() + 1) * (cHeight + cPadding) + cPadding)
                 .setBackgroundColor(myColor)            
                 ;
                 
@@ -128,8 +128,9 @@ void createMoviesList(StringList myList){
   
   cp5.addButton("addMovies")
      .setPosition(cX, cY)
-     .setSize(cWidth, cHeight)
+     .setSize(cWidth/3, cHeight)
      .setGroup(g1)
+     .setCaptionLabel("Add movies")
      ;  
   
   accordion.addItem(g1)
@@ -151,7 +152,7 @@ void addMovies() {
       myMovies.add(m);  //Add
       m.frameRate(30);  //Set the framerate 
       m.play();         //Pause at the first frame. 
-      m.jump(m.duration()/4);
+      m.jump(m.duration()*0.25);
       m.pause();
       
       //Subtitles
@@ -181,13 +182,14 @@ void addEditingFunctions(){
   Group g2 = cp5.addGroup("edit")
 //                .setPosition(cX, cY)
                 .setWidth(cWidth + 2 * cPadding)
-                .setBackgroundHeight(cHeight + 2 * cPadding)
+                .setBackgroundHeight(5 * (cHeight + cPadding) + cPadding)
+//                .setBackgroundHeight(10 * cHeight)
                 .setBackgroundColor(myColor)            
                 ;                
   
   cp5.addButton("sortAZ")
      .setPosition(cX, cY)
-     .setSize(cWidth, cHeight)
+     .setSize(cWidth/3, cHeight)
      .setCaptionLabel("Sort")
      .setGroup(g2)
      ;       
@@ -195,7 +197,7 @@ void addEditingFunctions(){
   
   cp5.addButton("findRepeated")
      .setPosition(cX, cY)
-     .setSize(cWidth, cHeight)
+     .setSize(cWidth/3, cHeight)
      .setCaptionLabel("Find repeated")
      .setGroup(g2)
      ;
@@ -218,6 +220,15 @@ void addEditingFunctions(){
      .getCaptionLabel()
      .align(ControlP5.CENTER, ControlP5.CENTER)
      ;
+  cX = cPadding;   
+  cY += 2*cHeight + cPadding;
+
+  cp5.addButton("playMovie")
+     .setPosition(cX, cY)
+     .setSize(cWidth/3, cHeight)
+     .setCaptionLabel("Play movie")
+     .setGroup(g2)
+     ;
      
      accordion.addItem(g2)
               .open(2);
@@ -225,14 +236,27 @@ void addEditingFunctions(){
 
 void sortAZ(){
   subs = sortArrayList(subs);
-  isPlaying = true;
+  if(subs.size() == 0){
+    currSub = subs.get(subIndex);
+    currMovie = currSub.movie;
+  }  
 }
 
 void findRepeated(){
   subs = selectRepeated(subs);
-  isPlaying = true;
+//  println(subs.size());
+  if(subs.size() == 0){
+    msg = "It seems like this movie has no repeated lines. Quite unusual!";
+  }else{
+    currSub = subs.get(subIndex);
+    currMovie = currSub.movie;
+  }
 }
 
 void searchForWords(){
 
+}
+
+void playMovie(){      
+      isPlaying = true;
 }
