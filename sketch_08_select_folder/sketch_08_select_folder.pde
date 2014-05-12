@@ -51,7 +51,7 @@ void draw(){
       for(Movie m : myMovies){
         m.pause();
       }
-      
+
       //What's the current subtitle?
       currSub = subs.get(subIndex);
   
@@ -65,7 +65,7 @@ void draw(){
     }
     
     /*---------- DRAW ----------*/  
-    if(myMovies != null){      
+    if(myMovies != null && currMovie != null){      
       //Main movie 
       PVector mRatio = new PVector(currMovie.width, currMovie.height);
       mRatio.normalize();

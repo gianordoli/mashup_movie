@@ -171,7 +171,7 @@ void addMovies() {
   subIndex = 0;
   isTalking = false;
   currSub = subs.get(subIndex);
-  currMovie = myMovies.get(subIndex);
+  currMovie = currSub.movie;
   
   addEditingFunctions();
 }
@@ -236,21 +236,21 @@ void addEditingFunctions(){
 
 void sortAZ(){
   subs = sortArrayList(subs);
-  if(subs.size() == 0){
-    currSub = subs.get(subIndex);
-    currMovie = currSub.movie;
-  }  
+//  if(subs.size() > 0){
+//    currSub = subs.get(subIndex);
+//    currMovie = currSub.movie;
+//  }  
 }
 
 void findRepeated(){
   subs = selectRepeated(subs);
 //  println(subs.size());
-  if(subs.size() == 0){
-    msg = "It seems like this movie has no repeated lines. Quite unusual!";
-  }else{
-    currSub = subs.get(subIndex);
-    currMovie = currSub.movie;
-  }
+//  if(subs.size() > 0){
+//    currSub = subs.get(subIndex);
+//    currMovie = currSub.movie;    
+//  }else{
+//    msg = "It seems like this movie has no repeated lines. Quite unusual!";
+//  }
 }
 
 void searchForWords(){
