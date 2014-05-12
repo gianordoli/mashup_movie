@@ -170,8 +170,8 @@ void addMovies() {
   //Playback settings
   subIndex = 0;
   isTalking = false;
-  currSub = subs.get(subIndex);
-  currMovie = currSub.movie;
+//  currSub = subs.get(subIndex);
+//  currMovie = currSub.movie;
   
   addEditingFunctions();
 }
