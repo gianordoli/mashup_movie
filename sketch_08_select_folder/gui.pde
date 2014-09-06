@@ -61,10 +61,12 @@ void setGUI(){
 }
 
 void select() {
+  println("Called select()");
   selectFolder("Select a folder to process:", "folderSelected");
 }
 
 void folderSelected(File selection) {
+  println("Called folderSelected()");
   if (selection == null) {
     println("Window was closed or the user hit cancel.");
   } else {
@@ -77,30 +79,31 @@ void folderSelected(File selection) {
 }
 
 void listMovieFiles(){
-
+  println("Called listMovieFiles()");
   folder = new java.io.File(dataPath(path));
   String[] filenames = folder.list();
-//  println(filenames[0]);
 
   StringList movieFiles = new StringList();
   for(String file : filenames){
-//    println(file);
+    println("File found: " + file);
     String extension = file;
     while(extension.indexOf(".") != -1){
       extension = extension.substring(extension.indexOf(".") + 1);
     }
-//    println("\t" + extension);    
+    println("\tFiletype: " + extension);    
     if(extension.equals("mp4") || extension.equals("mov")){
       movieFiles.append(file);
-//      println("Found new movie: " + file);
+      println("Found new movie: " + file);
     }
   }
   path += "/";
-//  println(movieFiles);
+  println("Total valid files: " + movieFiles.size());
+  
   createMoviesList(movieFiles);
 } 
 
 void createMoviesList(StringList myList){
+  println("Called createMoviesList()");
   
   Group g1 = cp5.addGroup("check")
                 .setWidth(cWidth + 2 * cPadding)
@@ -139,6 +142,7 @@ void createMoviesList(StringList myList){
 }
 
 void addMovies() {
+  println("Called addMovies()");
   
   myMovies = new ArrayList<Movie>();
   subs = new ArrayList<Sub>();
@@ -177,6 +181,8 @@ void addMovies() {
 }
 
 void addEditingFunctions(){
+  println("Called addEditingFunctions()");
+  
   cX = cPadding;
   cY = cPadding;
   Group g2 = cp5.addGroup("edit")
@@ -259,4 +265,8 @@ void searchForWords(){
 
 void playMovie(){      
       isPlaying = true;
+}
+
+void alert(String msg){
+  println(msg);
 }
