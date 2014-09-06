@@ -16,9 +16,10 @@ This project was the first attempt to create a tool for generative movie editing
 The latest version includes a GUI and the option to re-edit more than one video at a time.
 
 The application uses timestamps from subtitle files (.srt) to manipulate the videos.
+
 More information about the process [here](http://gabrielmfadt.wordpress.com/tag/generative-movie-mashup/).
 
-This project is a sequence of the [Mashup Book](https://github.com/gianordoli/mashup), developed for the same class.
+This project is a sequence of the [Movie Mashup as a Book](https://github.com/gianordoli/mashup), developed for the same class.
 
 Made with [Processing](http://processing.org)
 
