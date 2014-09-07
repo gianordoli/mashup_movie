@@ -1,3 +1,6 @@
+//HashMap
+import java.util.Map;
+
 //Video
 import processing.video.*;
 ArrayList<Movie> myMovies; //All movies

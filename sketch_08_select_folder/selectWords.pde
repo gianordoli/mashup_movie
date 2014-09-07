@@ -5,25 +5,35 @@ ArrayList<Sub> selectWords(ArrayList<Sub> originalArrayList, HashMap<String,Inte
 
   for (int i = 0; i < originalArrayList.size(); i++) {
     
-    String thisSub = originalArrayList.get(i).speech;
+    Sub thisSub = originalArrayList.get(i);
     
-    for (int j = 0; j < myWords.size(); j++) {
-      
-      if (thisSub.indexOf(myWords.get(j)) != -1) {
-//      if (thisSub.indexOf(myWords.get(j)) != -1) {
-        
-        //IF THE WORD IS MORE THAN 30% OF THE SENTENCE
-//        if (myWords.get(j).length() * 2 > thisSub.length()) {  
-          
-          //Add "this"
-          tempList.add(originalArrayList.get(i));
+    for (String s : thisSub.speechStringList) {
+      for (Map.Entry me : myWords.entrySet()) {
+        if(me.getKey().equals(s)){
+          tempList.add(thisSub);
           originalArrayList.remove(originalArrayList.get(i));
-          break;
-          
-//        }
+          break;        
+        }
       }
-      
     }
+    
+//    for (int j = 0; j < myWords.size(); j++) {
+//      
+//      if (thisSub.indexOf(myWords.get(j)) != -1) {
+////      if (thisSub.indexOf(myWords.get(j)) != -1) {
+//        
+//        //IF THE WORD IS MORE THAN 30% OF THE SENTENCE
+////        if (myWords.get(j).length() * 2 > thisSub.length()) {  
+//          
+//          //Add "this"
+//          tempList.add(originalArrayList.get(i));
+//          originalArrayList.remove(originalArrayList.get(i));
+//          break;
+//          
+////        }
+//      }
+      
+//    }
   }
   
   originalArrayList.clear();

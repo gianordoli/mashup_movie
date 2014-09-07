@@ -280,6 +280,7 @@ void searchForWords(){
 //  println(cp5.get(Textfield.class,"Search for words").getText());
   String[] allWords = split(cp5.get(Textfield.class,"Search for words").getText(), ';');
   for(String s : allWords){
+    s = trim(s);
     myWords.put(s.toLowerCase(), 0);
   }
   printArray(myWords);
