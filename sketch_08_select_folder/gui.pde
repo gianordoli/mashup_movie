@@ -266,19 +266,19 @@ void findRepeated(){
   println("Called findRepeated()");
   subs = selectRepeated(subs);
   println(subs.size());
-  if(subs.size() > 0){
-    currSub = subs.get(subIndex);
-    currMovie = currSub.movie;    
-  }else{
-    msg = "It seems like this movie has no repeated lines. Quite unusual!";
-  }
+//  if(subs.size() > 0){
+//    currSub = subs.get(subIndex);
+//    currMovie = currSub.movie;    
+//  }else{
+//    msg = "It seems like this movie has no repeated lines. Quite unusual!";
+//  }
 }
 
 void searchForWords(){
   println("***********************");
   println("Called searchForWords()");
 //  println(cp5.get(Textfield.class,"Search for words").getText());
-  String[] allWords = split(cp5.get(Textfield.class,"Search for words").getText(), ',');
+  String[] allWords = split(cp5.get(Textfield.class,"Search for words").getText(), ';');
   StringList myWords = new StringList();
   for(String s : allWords){
     myWords.append(s.toLowerCase());

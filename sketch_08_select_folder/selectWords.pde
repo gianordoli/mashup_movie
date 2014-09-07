@@ -10,10 +10,16 @@ ArrayList<Sub> selectWords(ArrayList<Sub> originalArrayList, StringList myWords)
     for (int j = 0; j < myWords.size(); j++) {
       
       if (thisSub.indexOf(myWords.get(j)) != -1) {
-        //Add "this"
-        tempList.add(originalArrayList.get(i));
-        originalArrayList.remove(originalArrayList.get(i));
-        break;
+        
+        //IF THE WORD IS MORE THAN 30% OF THE SENTENCE
+//        if (myWords.get(j).length() * 2 > thisSub.length()) {  
+          
+          //Add "this"
+          tempList.add(originalArrayList.get(i));
+          originalArrayList.remove(originalArrayList.get(i));
+          break;
+          
+//        }
       }
       
     }

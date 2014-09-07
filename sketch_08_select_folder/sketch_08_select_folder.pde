@@ -25,14 +25,14 @@ PFont raleway;
 String msg;
 
 void setup() {
-//  size(displayWidth, displayHeight);
-  size(1033, 640);
+  size(displayWidth, displayHeight);
+//  size(1033, 640);
   frameRate(30);
 //  colorMode(HSB);
 
   margin = new PVector(30, 20);
   thumbSize = new PVector(120, 65);
-  moviePos = new PVector(2 * margin.x + cWidth, margin.y);
+  moviePos = new PVector(4 * margin.x + cWidth, margin.y);
   raleway = loadFont("Raleway-Bold-21.vlw");
 
   myMovies = new ArrayList<Movie>();
@@ -70,16 +70,23 @@ void draw(){
     /*---------- DRAW ----------*/  
     if(myMovies != null && currMovie != null){      
       //Main movie 
-      PVector mRatio = new PVector(currMovie.width, currMovie.height);
-      mRatio.normalize();
-      float availableWidth = width - cWidth;
-      movieSize = new PVector(mRatio.x * availableWidth, mRatio.y * availableWidth);      
+//      PVector mRatio = new PVector(currMovie.width, currMovie.height);
+//      mRatio.normalize();
+//      float availableWidth = width - cWidth;
+//      movieSize = new PVector(mRatio.x * availableWidth, mRatio.y * availableWidth);
+//      float youtubeWidth = 640f;
+//      float multiplier = youtubeWidth / currMovie.width;
+      float youtubeHeight = 360f;
+      float multiplier = youtubeHeight / currMovie.height;
+      
+      movieSize = new PVector(currMovie.width * multiplier, currMovie.height * multiplier);
       image(currMovie, moviePos.x, moviePos.y, movieSize.x, movieSize.y);
       
 //      //Subtitle
 //      textAlign(CENTER, BOTTOM);
 //      textFont(raleway);
 //      text(currSub.speech, moviePos.x, moviePos.y - margin.y, movieSize.x, movieSize.y);
+//      println(subIndex + "/" + subs.size() + " |" + currSub.speech + "|");
 
       //Thumbs
       PVector thumbPos = new PVector(2*margin.x + cWidth, moviePos.y + movieSize.y + margin.y);
@@ -105,6 +112,7 @@ void draw(){
     if (subs != null && subIndex >= subs.size() && isPlaying) {
       //Drop all movies
       for(Movie m : myMovies){
+        m.play();
         m.stop();
       }
       exit();
@@ -129,6 +137,7 @@ void keyPressed(){
   if(keyCode == 27){
     if(myMovies.size() > 0){
       for(Movie m : myMovies){
+        m.play();
         m.stop();
       }
     }  

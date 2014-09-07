@@ -10,6 +10,15 @@ class Sub{
     index = _index;
     start = _start;
     end = _end;
-    speech = _speech;
+
+    // Removing punctuation
+    speech = trim(_speech);    
+    while((speech.length() > 0 &&
+          speech.charAt(speech.length()-1) == '?'
+          || speech.charAt(speech.length()-1) == '!'
+          || speech.charAt(speech.length()-1) == '.')){
+        speech = speech.substring(0, speech.length()-1);
+    }
+    println(speech);    
   }
 }

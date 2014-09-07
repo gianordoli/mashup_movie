@@ -49,7 +49,9 @@ void processSubs(Movie _movie, String filename) {
       }
     }    
     
-    println(speech);
-    subs.add(new Sub(_movie, index, start, end, speech));
+//    println(speech);
+    if(speech.length() > 0){ 
+      subs.add(new Sub(_movie, index, start, end, speech));
+    }
   }
 }
