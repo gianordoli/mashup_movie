@@ -18,6 +18,8 @@ ArrayList<Sub> selectWords(ArrayList<Sub> originalArrayList, StringList myWords)
       
     }
   }
+  
+  originalArrayList.clear();
 
   //Replace the original list with the sorted one
   return tempList;

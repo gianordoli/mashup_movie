@@ -34,6 +34,9 @@ void setup() {
   thumbSize = new PVector(120, 65);
   moviePos = new PVector(2 * margin.x + cWidth, margin.y);
   raleway = loadFont("Raleway-Bold-21.vlw");
+
+  myMovies = new ArrayList<Movie>();
+  subs = new ArrayList<Sub>();
   
   isPlaying = false;
   setGUI();
@@ -73,10 +76,10 @@ void draw(){
       movieSize = new PVector(mRatio.x * availableWidth, mRatio.y * availableWidth);      
       image(currMovie, moviePos.x, moviePos.y, movieSize.x, movieSize.y);
       
-      //Subtitle
-      textAlign(CENTER, BOTTOM);
-      textFont(raleway);
-      text(currSub.speech, moviePos.x, moviePos.y - margin.y, movieSize.x, movieSize.y);
+//      //Subtitle
+//      textAlign(CENTER, BOTTOM);
+//      textFont(raleway);
+//      text(currSub.speech, moviePos.x, moviePos.y - margin.y, movieSize.x, movieSize.y);
 
       //Thumbs
       PVector thumbPos = new PVector(2*margin.x + cWidth, moviePos.y + movieSize.y + margin.y);
@@ -121,3 +124,22 @@ void movieEvent(Movie m) {
 //boolean sketchFullScreen() {
 //  return true;
 //}
+
+void keyPressed(){
+  if(keyCode == 27){
+    if(myMovies.size() > 0){
+      for(Movie m : myMovies){
+        m.stop();
+      }
+    }  
+  }
+  else if(key == 'e'){
+    if(subs.size() > 0){
+      String[] everySub = new String[subs.size()];
+      for(int i = 0; i < subs.size(); i++){
+        everySub[i] = subs.get(i).speech;
+      }
+      saveStrings("parsed_subtitles.srt", everySub);
+    }
+  }
+}

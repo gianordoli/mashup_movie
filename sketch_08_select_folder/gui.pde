@@ -61,11 +61,13 @@ void setGUI(){
 }
 
 void select() {
+  println("***********************");
   println("Called select()");
   selectFolder("Select a folder to process:", "folderSelected");
 }
 
 void folderSelected(File selection) {
+  println("***********************");
   println("Called folderSelected()");
   if (selection == null) {
     println("Window was closed or the user hit cancel.");
@@ -79,30 +81,37 @@ void folderSelected(File selection) {
 }
 
 void listMovieFiles(){
+  println("***********************");
   println("Called listMovieFiles()");
   folder = new java.io.File(dataPath(path));
   String[] filenames = folder.list();
 
   StringList movieFiles = new StringList();
   for(String file : filenames){
-    println("File found: " + file);
-    String extension = file;
-    while(extension.indexOf(".") != -1){
-      extension = extension.substring(extension.indexOf(".") + 1);
-    }
-    println("\tFiletype: " + extension);    
-    if(extension.equals("mp4") || extension.equals("mov")){
-      movieFiles.append(file);
-      println("Found new movie: " + file);
+    // External drive index files
+    if(!file.substring(0, 2).equals("._")){
+      println("File found: " + file);
+      String extension = file.substring(file.length() - 3, file.length());
+//      while(extension.indexOf(".") != -1){
+//        extension = extension.substring(extension.indexOf(".") + 1);
+//      }
+      println("\tFiletype: " + extension);    
+      if(extension.equals("mp4") || extension.equals("mov")){
+        movieFiles.append(file);
+        println("Found new movie: " + file);
+      }
     }
   }
   path += "/";
   println("Total valid files: " + movieFiles.size());
   
-  createMoviesList(movieFiles);
+  if(movieFiles.size() > 0){
+    createMoviesList(movieFiles);
+  }
 } 
 
 void createMoviesList(StringList myList){
+  println("***********************");
   println("Called createMoviesList()");
   
   Group g1 = cp5.addGroup("check")
@@ -142,17 +151,17 @@ void createMoviesList(StringList myList){
 }
 
 void addMovies() {
+  println("***********************");
   println("Called addMovies()");
-  
-  myMovies = new ArrayList<Movie>();
-  subs = new ArrayList<Sub>();
   
 //    println(checkbox.getItems());
   for (int i = 0 ; i < checkbox.getItems().size(); i++) {
     String filename = checkbox.getItem(i).getLabel();
+    println(filename);
     if(checkbox.getItem(i).getValue() > 0){
       //Movies
-      Movie m = new Movie(this, path + filename); 
+      Movie m = new Movie(this, path + filename);
+      println("Created MOVIE" + path + filename); 
       myMovies.add(m);  //Add
       m.frameRate(30);  //Set the framerate 
       m.play();         //Pause at the first frame. 
@@ -160,14 +169,17 @@ void addMovies() {
       m.pause();
       
       //Subtitles
-      String tempFilename = filename;
-      while(tempFilename.indexOf(".") != -1){
-        tempFilename = tempFilename.substring(tempFilename.indexOf(".") + 1);
-      }
-      int index = filename.length() - tempFilename.length() - 1;
-      String subtitle = filename.substring(0, index) + ".srt";
+      String tempFilename = filename.substring(0, filename.length() - 3);
+//      while(tempFilename.indexOf(".") != -1){
+//        tempFilename = tempFilename.substring(tempFilename.indexOf(".") + 1);
+//      }
+//      int index = filename.length() - tempFilename.length() - 1;
+      String subtitle = tempFilename + "srt";
+      println(subtitle);
       //Add
       processSubs(m, path + subtitle);
+      println(subs.size());
+      println("Created SUBTITLE" + path + subtitle);
     } 
   }
   
@@ -181,6 +193,7 @@ void addMovies() {
 }
 
 void addEditingFunctions(){
+  println("***********************");
   println("Called addEditingFunctions()");
   
   cX = cPadding;
@@ -249,18 +262,36 @@ void sortAZ(){
 }
 
 void findRepeated(){
+  println("***********************");
+  println("Called findRepeated()");
   subs = selectRepeated(subs);
-//  println(subs.size());
+  println(subs.size());
+  if(subs.size() > 0){
+    currSub = subs.get(subIndex);
+    currMovie = currSub.movie;    
+  }else{
+    msg = "It seems like this movie has no repeated lines. Quite unusual!";
+  }
+}
+
+void searchForWords(){
+  println("***********************");
+  println("Called searchForWords()");
+//  println(cp5.get(Textfield.class,"Search for words").getText());
+  String[] allWords = split(cp5.get(Textfield.class,"Search for words").getText(), ',');
+  StringList myWords = new StringList();
+  for(String s : allWords){
+    myWords.append(s.toLowerCase());
+  }
+  printArray(myWords);
+  subs = selectWords(subs, myWords);
+  println(subs.size());
 //  if(subs.size() > 0){
 //    currSub = subs.get(subIndex);
 //    currMovie = currSub.movie;    
 //  }else{
-//    msg = "It seems like this movie has no repeated lines. Quite unusual!";
+//    msg = "No results found for your search... :(";
 //  }
-}
-
-void searchForWords(){
-
 }
 
 void playMovie(){      
