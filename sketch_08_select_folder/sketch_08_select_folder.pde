@@ -28,8 +28,8 @@ PFont raleway;
 String msg;
 
 void setup() {
-//  size(displayWidth, displayHeight);
-  size(1033, 640);
+  size(displayWidth, displayHeight);
+//  size(1033, 640);
   frameRate(30);
 //  colorMode(HSB);
 

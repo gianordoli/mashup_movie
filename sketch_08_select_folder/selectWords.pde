@@ -6,14 +6,19 @@ ArrayList<Sub> selectWords(ArrayList<Sub> originalArrayList, HashMap<String,Inte
   for (int i = 0; i < originalArrayList.size(); i++) {
     
     Sub thisSub = originalArrayList.get(i);
-    
+    boolean isStored = false;
     for (String s : thisSub.speechStringList) {
       for (Map.Entry me : myWords.entrySet()) {
         if(me.getKey().equals(s)){
           tempList.add(thisSub);
           originalArrayList.remove(originalArrayList.get(i));
-          break;        
+          isStored = true;
+          break;
         }
+      }
+      if(isStored){
+        isStored = false;
+        break;
       }
     }
     
