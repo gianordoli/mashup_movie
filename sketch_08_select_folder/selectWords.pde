@@ -1,4 +1,4 @@
-ArrayList<Sub> selectWords(ArrayList<Sub> originalArrayList, StringList myWords) {
+ArrayList<Sub> selectWords(ArrayList<Sub> originalArrayList, HashMap<String,Integer> myWords) {
   
   //This temporary ArrayList will store the objects sorted
   ArrayList<Sub> tempList = new ArrayList<Sub>();
@@ -10,6 +10,7 @@ ArrayList<Sub> selectWords(ArrayList<Sub> originalArrayList, StringList myWords)
     for (int j = 0; j < myWords.size(); j++) {
       
       if (thisSub.indexOf(myWords.get(j)) != -1) {
+//      if (thisSub.indexOf(myWords.get(j)) != -1) {
         
         //IF THE WORD IS MORE THAN 30% OF THE SENTENCE
 //        if (myWords.get(j).length() * 2 > thisSub.length()) {  

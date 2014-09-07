@@ -13,7 +13,7 @@ Boolean isPlaying;
 int subIndex;
 Sub currSub;
 Boolean isTalking;
-StringList myWords;
+HashMap<String,Integer> myWords;
 
 //Layout
 PVector margin;
@@ -25,8 +25,8 @@ PFont raleway;
 String msg;
 
 void setup() {
-  size(displayWidth, displayHeight);
-//  size(1033, 640);
+//  size(displayWidth, displayHeight);
+  size(1033, 640);
   frameRate(30);
 //  colorMode(HSB);
 
@@ -37,6 +37,7 @@ void setup() {
 
   myMovies = new ArrayList<Movie>();
   subs = new ArrayList<Sub>();
+  myWords = new HashMap<String,Integer>();
   
   isPlaying = false;
   setGUI();
@@ -87,6 +88,13 @@ void draw(){
 //      textFont(raleway);
 //      text(currSub.speech, moviePos.x, moviePos.y - margin.y, movieSize.x, movieSize.y);
 //      println(subIndex + "/" + subs.size() + " |" + currSub.speech + "|");
+
+      // Word count
+//      textAlign(CENTER, BOTTOM);
+//      textFont(raleway);
+//      for(int i = 0; i < myWords.length; i++){
+//        text(myWords.get)
+//      }
 
       //Thumbs
       PVector thumbPos = new PVector(2*margin.x + cWidth, moviePos.y + movieSize.y + margin.y);
