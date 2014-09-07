@@ -87,9 +87,9 @@ void draw(){
       image(currMovie, moviePos.x, moviePos.y, movieSize.x, movieSize.y);
       
 //      //Subtitle
-//      textAlign(CENTER, BOTTOM);
-//      textFont(raleway);
-//      text(currSub.speech, moviePos.x, moviePos.y - margin.y, movieSize.x, movieSize.y);
+      textAlign(CENTER, BOTTOM);
+      textFont(raleway);
+      text(currSub.speech, moviePos.x, moviePos.y - margin.y, movieSize.x, movieSize.y);
 //      println(subIndex + "/" + subs.size() + " |" + currSub.speech + "|");
 
       // Word count

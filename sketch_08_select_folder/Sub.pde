@@ -12,9 +12,9 @@ class Sub{
     start = _start;
     end = _end;
     speech = removePunctuation(_speech);
-//    println(speech);
+    println(speech);
     speechStringList = parseIntoStringList(_speech);
-    printArray(speechStringList);
+//    printArray(speechStringList);
   }
   
   StringList parseIntoStringList(String _speech){
@@ -35,15 +35,30 @@ class Sub{
   
   String removePunctuation(String _word){
       String word = _word;
+      // End to start
       while((word.length() > 0) &&
             (word.charAt(word.length()-1) == '?'
             || word.charAt(word.length()-1) == '!'
             || word.charAt(word.length()-1) == '.'
             || word.charAt(word.length()-1) == ','
             || word.charAt(word.length()-1) == ';'
-            || word.charAt(word.length()-1) == '-')){
+            || word.charAt(word.length()-1) == '-'
+            || word.charAt(word.length()-1) == '\"'
+            || word.charAt(word.length()-1) == '\'')){
           word = word.substring(0, word.length()-1);
-      }    
+      }
+      // Start to end
+      while((word.length() > 0) &&
+            (word.charAt(0) == '?'
+            || word.charAt(0) == '!'
+            || word.charAt(0) == '.'
+            || word.charAt(0) == ','
+            || word.charAt(0) == ';'
+            || word.charAt(0) == '-'
+            || word.charAt(0) == '\"'
+            || word.charAt(0) == '\'')){
+          word = word.substring(1);
+      }      
     return word;
   }
 }

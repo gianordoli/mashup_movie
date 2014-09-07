@@ -29,7 +29,10 @@ void processSubs(Movie _movie, String filename) {
     }
     
     //If the next line is also text
-    while (mySubs[i].length() != 0 && parseInt(mySubs[i]) == 0) {  //Second line?
+    while (mySubs[i].length() != 0 // If it' not an empty paragraph
+          && (parseInt(mySubs[i]) == 0 // also not a number
+          || str(parseInt(mySubs[i])).length() != mySubs[i].length())) { // and if the conversion for number returns true;
+                                                                        // also check if both things have the same length
       speech += " " + mySubs[i].toLowerCase();
       if(i < mySubs.length - 1){
         i++;
