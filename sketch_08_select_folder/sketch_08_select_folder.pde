@@ -28,14 +28,14 @@ PFont raleway;
 String msg;
 
 void setup() {
-  size(displayWidth, displayHeight);
-//  size(1033, 640);
+//  size(displayWidth, displayHeight);
+  size(displayWidth, 640);
   frameRate(30);
 //  colorMode(HSB);
 
   margin = new PVector(30, 20);
   thumbSize = new PVector(120, 65);
-  moviePos = new PVector(4 * margin.x + cWidth, margin.y);
+  moviePos = new PVector(4 * margin.x + cWidth, 2*margin.y);
   raleway = loadFont("Raleway-Bold-21.vlw");
 
   myMovies = new ArrayList<Movie>();
@@ -78,18 +78,18 @@ void draw(){
 //      mRatio.normalize();
 //      float availableWidth = width - cWidth;
 //      movieSize = new PVector(mRatio.x * availableWidth, mRatio.y * availableWidth);
-//      float youtubeWidth = 640f;
-//      float multiplier = youtubeWidth / currMovie.width;
-      float youtubeHeight = 360f;
-      float multiplier = youtubeHeight / currMovie.height;
+      float youtubeWidth = 640f;
+      float multiplier = youtubeWidth / currMovie.width;
+//      float youtubeHeight = 360f;
+//      float multiplier = youtubeHeight / currMovie.height;
       
       movieSize = new PVector(currMovie.width * multiplier, currMovie.height * multiplier);
       image(currMovie, moviePos.x, moviePos.y, movieSize.x, movieSize.y);
       
 //      //Subtitle
-      textAlign(CENTER, BOTTOM);
-      textFont(raleway);
-      text(currSub.speech, moviePos.x, moviePos.y - margin.y, movieSize.x, movieSize.y);
+//      textAlign(CENTER, BOTTOM);
+//      textFont(raleway);
+//      text(currSub.speech, moviePos.x, moviePos.y - margin.y, movieSize.x, movieSize.y);
 //      println(subIndex + "/" + subs.size() + " |" + currSub.speech + "|");
 
       // Word count
@@ -100,14 +100,14 @@ void draw(){
 //      }
 
       //Thumbs
-      PVector thumbPos = new PVector(2*margin.x + cWidth, moviePos.y + movieSize.y + margin.y);
+      PVector thumbPos = new PVector(4*margin.x + cWidth, moviePos.y + movieSize.y + margin.y);
       for(int i = 0; i < myMovies.size(); i++){
         Movie m = myMovies.get(i); 
         image(m, thumbPos.x, thumbPos.y, thumbSize.x, thumbSize.y);
         thumbPos.x += thumbSize.x;
-        if(thumbPos.x > width){
-          thumbPos.x = margin.x;
-          thumbPos.y += margin.y;
+        if(thumbPos.x - thumbSize.x > width){
+          thumbPos.x = 4*margin.x;
+          thumbPos.y += thumbSize.y + margin.y;
         }
       }  
     }
@@ -159,7 +159,31 @@ void keyPressed(){
       for(int i = 0; i < subs.size(); i++){
         everySub[i] = subs.get(i).speech;
       }
-      saveStrings("parsed_subtitles.srt", everySub);
+      saveStrings("data/parsed_subtitles.srt", everySub);
     }
   }
+  else if(key == 's'){
+    if(subs.size() > 0){
+      
+      JSONArray JSONsubs = new JSONArray();
+
+      for(int i = 0; i < subs.size(); i++){
+    
+        JSONObject thisSub = new JSONObject();
+  
+        thisSub.setInt("index", subs.get(i).index);
+        thisSub.setFloat("start", subs.get(i).start);
+        thisSub.setFloat("end", subs.get(i).end);
+        thisSub.setString("speech", subs.get(i).speech);
+    
+        JSONsubs.setJSONObject(i, thisSub);
+      }
+      
+      JSONObject json = new JSONObject();
+      json.setJSONArray("subs", JSONsubs);
+    
+      saveJSONObject(json, "data/parsed_subtitles.json");      
+    }
+  }  
+  
 }
